@@ -2,6 +2,24 @@ const time = document.querySelector(".time");
 const cond = document.querySelector(".condition");
 const temp = document.querySelector(".temp");
 
+const timeConvert = (num) => {
+  const hours = Math.floor(num);
+  const minutes = (num * 60) % 60;
+  return `${hours}:${minutes}`;
+};
+
+const currentTime = function (tp) {
+  let curTime = new Date();
+  let curHour = curTime.getHours();
+
+  if (curHour + tp < 24) {
+    return timeConvert(curHour + tp);
+  }
+  if (curHour + tp >= 24) {
+    return timeConvert(curHour + tp - 24);
+  }
+};
+
 if (navigator.geolocation)
   navigator.geolocation.getCurrentPosition(
     function (position) {
@@ -9,18 +27,6 @@ if (navigator.geolocation)
       const { longitude } = position.coords;
       lat = latitude.toString().slice(0, 6);
       long = longitude.toString().slice(0, 6);
-
-      const currentTime = function (tp) {
-        let curTime = new Date();
-        let curHour = curTime.getHours();
-
-        if (curHour + tp < 24) {
-          return curHour + tp;
-        }
-        if (curHour + tp >= 24) {
-          return curHour + tp - 24;
-        }
-      };
 
       const getWeather = async function () {
         const res = await fetch(
@@ -36,7 +42,7 @@ if (navigator.geolocation)
         const { dataseries: data } = res;
         console.log(data[0].prec_type);
         cond.innerHTML = data[0].prec_type;
-        temp.innerHTML = data[0].temp2m;
+        temp.innerHTML = `${data[0].temp2m}°`;
         time.innerHTML = currentTime(res.dataseries[0].timepoint);
       });
     },
