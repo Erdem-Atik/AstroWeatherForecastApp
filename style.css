@@ -1,0 +1,97 @@
+/* {
+  outline: 1px solid red;
+}*/
+h1,
+h2 {
+  text-align: center;
+  font-family: "Dongle", sans-serif;
+  font-family: "Poppins", sans-serif;
+  color: #cccccc;
+}
+
+body {
+  background-color: #343c43;
+  padding: 0;
+  margin: 0;
+}
+
+.container {
+  background-color: #cccccc;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-origin: content-box;
+  background-image: url("https://images.unsplash.com/photo-1436891620584-47fd0e565afb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80");
+  justify-self: center;
+  opacity: 0.9;
+  margin: 0 auto;
+  padding: 0;
+  width: 75%;
+  height: 1000px;
+  list-style-type: none;
+  color: wheat;
+  border: 2px solid #4920b8;
+  border-radius: 10px;
+}
+
+.forecast-1 {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+
+  padding-top: 4rem;
+}
+
+.header {
+  font-family: "Dongle", sans-serif;
+  font-family: "Poppins", sans-serif;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-align: center;
+  justify-content: center;
+  padding: 1rem;
+  display: grid;
+  margin: 0;
+  color: #fde047;
+}
+
+.item {
+  font-family: "Dongle", sans-serif;
+  font-family: "Poppins", sans-serif;
+  justify-content: center;
+  text-align: center;
+  padding: 1rem;
+  margin: 0;
+}
+
+i {
+  font-size: 3em;
+}
+.fa-cloud,
+.fa-moon,
+.fa-snowflake {
+  font-size: 2.4em;
+}
+
+footer {
+  background-color: black;
+  display: flexbox;
+  color: aliceblue;
+  padding-left: 0;
+  margin: 0;
+  justify-content: center;
+  padding-left: 12rem;
+}
+
+footer p {
+  justify-content: center;
+  font-family: "Dongle", sans-serif;
+  font-family: "Poppins", sans-serif;
+  font-size: 0.7em;
+}
+
+footer a {
+  color: #e2ddc2;
+}
+
+a:hover {
+  color: yellow;
+}
