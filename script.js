@@ -44,13 +44,17 @@ const selectState = (el) => {
   if (el.weather.includes("rain") && el.weather.includes("night"))
     return ` Rainy Night`;
 
-  if (el.weather.includes("snow")) return `Snow`;
+  if (el.weather.includes("snow") && el.weather.includes("night"))
+    return `Snowy Night`;
+
+  if (el.weather.includes("snow") && el.weather.includes("day"))
+    return `Snowy Day`;
 
   if (el.weather.includes("clear") && el.weather.includes("day"))
     return `Clear Day`;
 
   if (el.weather.includes("cloudy") && el.weather.includes("day"))
-    return `Cloudy`;
+    return `Cloudy Day`;
 
   if (el.weather.includes("rain") && el.weather.includes("day"))
     return `Rainy Day`;
@@ -107,13 +111,14 @@ if (navigator.geolocation)
         const res = await fetch(
           `http://www.7timer.info/bin/api.pl?lon=${long}&lat=${lat}&product=civil&output=json`
         );
+
         const result = await res.json();
         return result;
       };
 
-      getWeather().then((res) => {
-        console.log(res, lat, long);
-        const { dataseries: data, init: init } = res;
+      getWeather().then((rslt) => {
+        console.log(rslt, lat, long);
+        const { dataseries: data, init: init } = rslt;
         //console.log(data, init);
         predictor(data, init, 3, 1);
         // console.log(data[0].prec_type);

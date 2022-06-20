@@ -1,6 +1,6 @@
-/* {
+/* * {
   outline: 1px solid red;
-}*/
+} */
 h1,
 h2 {
   text-align: center;
@@ -48,7 +48,6 @@ body {
   text-align: center;
   justify-content: center;
   padding: 1rem;
-  display: grid;
   margin: 0;
   color: #fde047;
 }
@@ -78,7 +77,6 @@ footer {
   padding-left: 0;
   margin: 0;
   justify-content: center;
-  padding-left: 12rem;
 }
 
 footer p {
@@ -86,6 +84,7 @@ footer p {
   font-family: "Dongle", sans-serif;
   font-family: "Poppins", sans-serif;
   font-size: 0.7em;
+  padding-left: 12rem;
 }
 
 footer a {
