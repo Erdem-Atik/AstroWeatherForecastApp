@@ -10,7 +10,7 @@ const curGMT = (GMTdif = 3) => {
   if (timecorrection > 0) return timecorrection;
   if (timecorrection < 0) return Math.abs(timecorrection - 21);
 };
-// select icon
+// select icon accoring to the condition
 const selectIcon = (el) => {
   if (el.weather.includes("cloudy") && el.weather.includes("night"))
     return `<i class="fas fa-cloud-moon"></i>`;
