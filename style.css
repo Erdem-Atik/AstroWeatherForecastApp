@@ -1,96 +1,67 @@
-/* * {
-  outline: 1px solid red;
-} */
-h1,
-h2 {
-  text-align: center;
-  font-family: "Dongle", sans-serif;
-  font-family: "Poppins", sans-serif;
-  color: #cccccc;
+*{
+  box-sizing: border-box;
 }
-
-body {
-  background-color: #343c43;
-  padding: 0;
+html{
+  font-size: 62.5%; /* 16px*0,625 =10 px = 1rem */
+}
+body{
+  height: 100vh;
+  font: 1.6rem Helvetica, Arial;
   margin: 0;
 }
-
-.container {
-  background-color: #cccccc;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-origin: content-box;
-  background-image: url("https://images.unsplash.com/photo-1436891620584-47fd0e565afb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80");
-  justify-self: center;
-  opacity: 0.9;
-  margin: 0 auto;
-  padding: 0;
-  width: 75%;
-  height: 1000px;
-  list-style-type: none;
-  color: wheat;
-  border: 2px solid #4920b8;
-  border-radius: 10px;
-}
-
-.forecast-1 {
+.grid-container {
   display: grid;
-  grid-template-columns: auto auto auto auto;
-
-  padding-top: 4rem;
+  grid-template-areas: 'header'
+  'main'
+  'footer';
+  grid-template-columns: 1fr;
+  grid-template-rows: 5rem 1fr 5rem;
+  height: 100%;
 }
-
-.header {
-  font-family: "Dongle", sans-serif;
-  font-family: "Poppins", sans-serif;
+header{
+  grid-area: header;
+  background-color: #010a13;
+  color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+}
+header a{
+  color: #ffffff;
   font-weight: bold;
-  text-transform: uppercase;
-  text-align: center;
+  text-decoration: none;
+}
+header a:hover{
+  color: #f0899f;
+}
+.brand a {
+  font-size: 3rem;
+}
+
+.fa-shopping-cart{
+  padding-right: 2rem;
+}
+
+footer{
+  background-color: #010a13;
+  display: flex;
   justify-content: center;
-  padding: 1rem;
-  margin: 0;
-  color: #fde047;
+  align-items: center;
+  color: #ffffff;
+}
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
 }
 
-.item {
-  font-family: "Dongle", sans-serif;
-  font-family: "Poppins", sans-serif;
-  justify-content: center;
-  text-align: center;
-  padding: 1rem;
-  margin: 0;
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
 }
 
-i {
-  font-size: 3em;
-}
-.fa-cloud,
-.fa-moon,
-.fa-snowflake {
-  font-size: 2.4em;
-}
-
-footer {
-  background-color: black;
-  display: flexbox;
-  color: aliceblue;
-  padding-left: 0;
-  margin: 0;
-  justify-content: center;
-}
-
-footer p {
-  justify-content: center;
-  font-family: "Dongle", sans-serif;
-  font-family: "Poppins", sans-serif;
-  font-size: 0.7em;
-  padding-left: 12rem;
-}
-
-footer a {
-  color: #e2ddc2;
-}
-
-a:hover {
-  color: yellow;
+tr:nth-child(even) {
+  background-color: #dddddd;
 }

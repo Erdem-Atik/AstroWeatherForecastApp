@@ -1,4 +1,6 @@
 const forecast = document.querySelector(".forecast-1");
+const titles = document.querySelector(".titles")
+const fortables = document.querySelector(".forecastTable")
 
 //calculate the current GMT hour
 let time;
@@ -68,7 +70,6 @@ const predictor = function (fdata, init, tpoint = 3, day) {
     (curGMT() - +init.slice(-2) < 0 ? curGMT() : curGMT() - +init.slice(-2)) /
       tpoint
   ); //
-  console.log(arrIn);
   // show the weather condition's time
   const curTime = (arrIndex) => {
     //show 'now' if time is now
@@ -83,21 +84,34 @@ const predictor = function (fdata, init, tpoint = 3, day) {
         .toString()
         .padStart(2, 0)}:00`;
   };
+
+  
   //select time window array between current time and after 24 hours
   const selectedData = fdata.filter((el, i) => {
     return i >= arrIn && i <= arrIn + 8 * day;
   });
-  // creates html tag
+console.log(selectedData);
 
-  selectedData.forEach((el, i) => {
-    const tag = ` <div class="time item"> ${curTime(i)} </div>
-      <div class="temp item">${el.temp2m} °C</div>
-       <div class="weather item">${selectState(el)}</div>
-     <div class="symbol item">${selectIcon(el)}</div>`;
-
-    forecast.insertAdjacentHTML("beforeend", tag);
+ selectedData.forEach((el, i) => {
+    const tag = ` 
+  <tr>
+    <td>${curTime(i)}</td>
+    <td>${el.seeing}</td>
+    <td>${el.transparency}</td>
+    <td>${el.wind10m.speed}</td>
+    <td>${el.wind10m.direction}</td>
+    <td>${el.temp2m}</td>
+  </tr>
+  `    
+  fortables.insertAdjacentHTML("beforeend", tag);
   });
 };
+
+
+      
+
+
+
 //async functions. 1) obtain geolocation 2) get the weather broadcast from the API
 if (navigator.geolocation)
   navigator.geolocation.getCurrentPosition(
@@ -109,9 +123,8 @@ if (navigator.geolocation)
 
       const getWeather = async function () {
         const res = await fetch(
-          `http://www.7timer.info/bin/api.pl?lon=${long}&lat=${lat}&product=civil&output=json`
+          `http://www.7timer.info/bin/api.pl?lon=${long}&lat=${lat}&product=astro&output=json`         
         );
-
         const result = await res.json();
         return result;
       };
@@ -119,8 +132,9 @@ if (navigator.geolocation)
       getWeather().then((rslt) => {
         console.log(rslt, lat, long);
         const { dataseries: data, init: init } = rslt;
+        console.log(rslt);
         //console.log(data, init);
-        predictor(data, init, 3, 1);
+       predictor(data, init, 3, 1);
         // console.log(data[0].prec_type);
       });
     },
@@ -128,3 +142,6 @@ if (navigator.geolocation)
       alert("could not your position");
     }
   );
+
+  // cloudcover bulut örtüsü
+  //seeing görüş
