@@ -15,8 +15,9 @@ body{
   'main'
   'footer';
   grid-template-columns: 1fr;
-  grid-template-rows: 5rem 1fr 5rem;
+  grid-template-rows: 2rem 1fr 2rem;
   height: 100%;
+  width:max-content;
 }
 header{
   grid-area: header;
@@ -26,6 +27,7 @@ header{
   justify-content: space-between;
   align-items: center;
   padding: 0.5rem;
+  width: auto;
 }
 header a{
   color: #ffffff;
@@ -49,6 +51,7 @@ footer{
   justify-content: center;
   align-items: center;
   color: #ffffff;
+  width: auto;
 }
 table {
   font-family: arial, sans-serif;
