@@ -213,7 +213,7 @@ if (navigator.geolocation)
 
       const getWeather = async function () {
         const res = await fetch(
-          `http://www.7timer.info/bin/api.pl?lon=${29.172}&lat=${41.216}&product=astro&output=json` 
+          `http://www.7timer.info/bin/api.pl?lon=${long}&lat=${lat}&product=astro&output=json` 
         );
         const result = await res.json();
         return result;
