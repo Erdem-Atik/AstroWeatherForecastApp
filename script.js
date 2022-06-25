@@ -222,7 +222,6 @@ if (navigator.geolocation)
       getWeather().then((rslt) => {
         console.log(rslt, lat, long);
         const { dataseries: data, init: init } = rslt;
-        console.log(rslt);
         //console.log(data, init);
        predictor(data, init, 3, 1);
         // console.log(data[0].prec_type);
