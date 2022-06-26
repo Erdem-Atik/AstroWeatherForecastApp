@@ -102,10 +102,11 @@ const cloudMeas = function(clo){
   if(clo===2) return `6%-19%`
   if(clo===3) return `19%-31%`
   if(clo===4) return `31%-44%`
-  if(clo===5) return `56%-69%`
-  if(clo===6) return `69%-81%`
-  if(clo===7) return `81%-94%`
-  if(clo===8) return `94%-100%`
+  if(clo===5) return `44%-56%`
+  if(clo===6) return `56%-69%`
+  if(clo===7) return `69%-81%`
+  if(clo===8) return `81%-94%`
+  if(clo===9) return `94%-100%`
 }
 
 const humMeas = function(hum){
@@ -131,28 +132,6 @@ const humMeas = function(hum){
   if(hum=== 15) return `95%-99%`
   if(hum=== 16) return `100%`
 }
-
-// -4	0%-5%
-// -3	5%-10%
-// -2	10%-15%
-// -1	15%-20%
-// 0	20%-25%
-// 1	25%-30%
-// 2	30%-35%
-// 3	35%-40%
-// 4	40%-45%
-// 5	45%-50%
-// 6	50%-55%
-// 7	55%-60%
-// 8	60%-65%
-// 9	65%-70%
-// 10	70%-75%
-// 11	75%-80%
-// 12	80%-85%
-// 13	85%-90%
-// 14	90%-95%
-// 15	95%-99%
-// 16	100%
 
 //select weather condition
 const predictor = function (fdata, init, tpoint = 3, day) {
