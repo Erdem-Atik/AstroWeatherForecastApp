@@ -68,3 +68,7 @@ td, th {
 tr:nth-child(even) {
   background-color: #dddddd;
 }
+
+#map {
+  height: 80vh;
+}

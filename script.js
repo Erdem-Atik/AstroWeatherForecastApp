@@ -135,6 +135,9 @@ const humMeas = function(hum){
 
 //select weather condition
 const predictor = function (fdata, init, tpoint = 3, day) {
+
+
+
   // fdata: dataseries array in JSON data, init: initializing time, tpoint: timepoint
   //which array's index indicates current time's weather condition
   const arrIn = Math.floor(
@@ -176,8 +179,13 @@ console.log(selectedData);
     <td>${el.temp2m}</td>
   </tr>
   `    
-  fortables.insertAdjacentHTML("beforeend", tag);
+fortables.insertAdjacentHTML("beforeend", tag);
+
+
   });
+
+
+  
 };
 
 
@@ -190,6 +198,19 @@ if (navigator.geolocation)
       const lat = +latitude.toString().slice(0, 6);
       const long = +longitude.toString().slice(0, 6)
 
+
+      var map = L.map('map').setView([51.505, -0.09], 13);
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(map);
+      
+      // L.marker([51.5, -0.09]).addTo(map)
+      //     .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
+      //     .openPopup();
+      
+
+      
       const getWeather = async function () {
         const res = await fetch(
           `http://www.7timer.info/bin/api.pl?lon=${28.979}&lat=${41.0151}&product=astro&output=json` 
@@ -202,7 +223,7 @@ if (navigator.geolocation)
         console.log(rslt, lat, long);
         const { dataseries: data, init: init } = rslt;
         //console.log(data, init);
-       predictor(data, init, 3, 1);
+       predictor(data, init, 3, 0.5);
         // console.log(data[0].prec_type);
       });
     },
@@ -213,3 +234,23 @@ if (navigator.geolocation)
 
   // cloudcover bulut örtüsü
   //seeing görüş
+
+  
+
+
+
+
+//   var popup = L.popup()
+//   .setLatLng([51.513, -0.09])
+//   .setContent("I am a standalone popup.")
+//   .openOn(map);
+
+// function onMapClick(e) {
+// console.log(e.latlng);
+//   popup
+//     .setLatLng(e.latlng)
+//     .setContent(`${tag}`)
+//     .openOn(map);
+//   }
+  
+//   map.on('click', onMapClick);
