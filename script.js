@@ -1,7 +1,7 @@
 const forecast = document.querySelector(".forecast-1");
 const titles = document.querySelector(".titles")
 const fortables = document.querySelector(".forecastTable")
-
+const map=document.querySelector('#map')
 //calculate the current GMT hour
 let time;
 const curGMT = (GMTdif = 3) => {
@@ -61,7 +61,6 @@ const selectState = (el) => {
   if (el.weather.includes("rain") && el.weather.includes("day"))
     return `Rainy Day`;
 };
-
 
 
 const windMeas = function(wind){
@@ -133,40 +132,46 @@ const humMeas = function(hum){
   if(hum=== 16) return `100%`
 }
 
-//select weather condition
-const predictor = function (fdata, init, tpoint = 3, day) {
+//Leaf Map Library Function
+const LeafMap= function(cont){
+  var map = L.map('map').setView([51.505, -0.09], 13);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+
+    var popup = L.popup();
+
+    function onMapClick(e) {
+      const {lat:pickedlat, lng: pickedlng} = e.latlng
+      console.log(pickedlat,pickedlng);
+        popup
+            .setLatLng(e.latlng)
+            .setContent(`${cont}` + e.latlng.toString())
+            .openOn(map);
+     
+    }    
+    map.on('click', onMapClick); 
+
+}
+  // show the weather condition's time(3 is timepoint, not magic number)
+const curTime = (arrIndex) => {
+  //show 'now' if time is now
+  if (arrIndex === 0) return `ŞİMDİ`;
+  // show weather condition's time
+  if (arrIndex > 0)
+    return `${(
+      time.getHours() +
+      arrIndex * 3 -
+      24 * Math.floor((time.getHours() + arrIndex * 3) / 24)
+    )
+      .toString()
+      .padStart(2, 0)}:00`;
+};
 
 
-
-  // fdata: dataseries array in JSON data, init: initializing time, tpoint: timepoint
-  //which array's index indicates current time's weather condition
-  const arrIn = Math.floor(
-    (curGMT() - +init.slice(-2) < 0 ? curGMT() : curGMT() - +init.slice(-2)) /
-      tpoint
-  ); //
-  // show the weather condition's time
-  const curTime = (arrIndex) => {
-    //show 'now' if time is now
-    if (arrIndex === 0) return `ŞİMDİ`;
-    // show weather condition's time
-    if (arrIndex > 0)
-      return `${(
-        time.getHours() +
-        arrIndex * tpoint -
-        24 * Math.floor((time.getHours() + arrIndex * tpoint) / 24)
-      )
-        .toString()
-        .padStart(2, 0)}:00`;
-  };
-
-  
-  //select time window array between current time and after 24 hours
-  const selectedData = fdata.filter((el, i) => {
-    return i >= arrIn && i <= arrIn + 8 * day;
-  });
-console.log(selectedData);
-
- selectedData.forEach((el, i) => {
+const tableMarker = function(data ){
+ data.forEach((el, i) => {
     const tag = ` 
   <tr>
     <td>${curTime(i)}</td>
@@ -181,15 +186,43 @@ console.log(selectedData);
   `    
 fortables.insertAdjacentHTML("beforeend", tag);
 
-
   });
 
+}
 
-  
+//select weather condition
+const predictor = function (fdata, init, tpoint = 3, day) {
+ 
+  LeafMap('değerler ');
+  // fdata: dataseries array in JSON data, init: initializing time, tpoint: timepoint
+  //which array's index indicates current time's weather condition
+
+  const arrIn = Math.floor(
+    (curGMT() - +init.slice(-2) < 0 ? curGMT() : curGMT() - +init.slice(-2)) /
+      tpoint
+  ); 
+
+  //select time window array between current time and after 24 hours
+  const selectedData = fdata.filter((el, i) => {
+    return i >= arrIn && i <= arrIn + 8 * day;
+  });
+console.log(selectedData);
+tableMarker(selectedData)
+
+};
+
+//async functions to get the weather broadcast from the API
+const getWeather = async function (lng,lt) {
+  const res = await fetch(
+    `http://www.7timer.info/bin/api.pl?lon=${lng}&lat=${lt}&product=astro&output=json` 
+  );
+  const result = await res.json();
+  return result;
 };
 
 
-//async functions. 1) obtain geolocation 2) get the weather broadcast from the API
+
+// obtain current device geolocation 
 if (navigator.geolocation)
   navigator.geolocation.getCurrentPosition(
     function (position) {
@@ -197,33 +230,13 @@ if (navigator.geolocation)
       const { longitude } = position.coords;
       const lat = +latitude.toString().slice(0, 6);
       const long = +longitude.toString().slice(0, 6)
-
-
-      var map = L.map('map').setView([51.505, -0.09], 13);
-
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-      }).addTo(map);
-      
-      // L.marker([51.5, -0.09]).addTo(map)
-      //     .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
-      //     .openPopup();
-      
-
-      
-      const getWeather = async function () {
-        const res = await fetch(
-          `http://www.7timer.info/bin/api.pl?lon=${28.979}&lat=${41.0151}&product=astro&output=json` 
-        );
-        const result = await res.json();
-        return result;
-      };
-
-      getWeather().then((rslt) => {
+           
+      getWeather(long,lat).then((rslt) => {
         console.log(rslt, lat, long);
         const { dataseries: data, init: init } = rslt;
         //console.log(data, init);
        predictor(data, init, 3, 0.5);
+
         // console.log(data[0].prec_type);
       });
     },
@@ -232,25 +245,15 @@ if (navigator.geolocation)
     }
   );
 
-  // cloudcover bulut örtüsü
-  //seeing görüş
 
+map.addEventListener('click',function(e){
+  if(e){
+
+  }
+
+})
   
 
 
 
 
-//   var popup = L.popup()
-//   .setLatLng([51.513, -0.09])
-//   .setContent("I am a standalone popup.")
-//   .openOn(map);
-
-// function onMapClick(e) {
-// console.log(e.latlng);
-//   popup
-//     .setLatLng(e.latlng)
-//     .setContent(`${tag}`)
-//     .openOn(map);
-//   }
-  
-//   map.on('click', onMapClick);
