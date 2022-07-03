@@ -204,7 +204,24 @@ const getWeather = async function (lng,lt) {
 
 //Leaf Map Library Function
 const LeafMap= function(cont){
-  var map = L.map('map').setView([51.505, -0.09], 13);
+
+
+  let curlat, curlong
+//obtain current device geolocation 
+if (navigator.geolocation)
+  navigator.geolocation.getCurrentPosition(
+    function (position) {
+      const { latitude } = position.coords;
+      const { longitude } = position.coords;
+       curlat = +latitude.toString().slice(0, 6);
+       curlong = +longitude.toString().slice(0, 6)      
+    },
+    function () {
+      alert("could not your position");
+    }
+  );
+// workarouund solution
+  var map = L.map('map').setView([39.276827, 34.712049], 6);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -231,30 +248,6 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 
 LeafMap('astro')
-
-// obtain current device geolocation 
-// if (navigator.geolocation)
-//   navigator.geolocation.getCurrentPosition(
-//     function (position) {
-//       const { latitude } = position.coords;
-//       const { longitude } = position.coords;
-//       const lat = +latitude.toString().slice(0, 6);
-//       const long = +longitude.toString().slice(0, 6)
-           
-//       getWeather(long,lat).then((rslt) => {
-//         console.log(rslt, lat, long);
-//         const { dataseries: data, init: init } = rslt;
-//         //console.log(data, init);
-//        predictor(data, init, 3, 0.5);
-
-//         // console.log(data[0].prec_type);
-//       });
-//     },
-//     function () {
-//       alert("could not your position");
-//     }
-//   );
-
 
 
 
