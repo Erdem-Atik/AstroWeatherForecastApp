@@ -2,6 +2,7 @@ const forecast = document.querySelector(".forecast-1");
 const titles = document.querySelector(".titles")
 const fortables = document.querySelector(".forecastTable")
 const map=document.querySelector('#map')
+
 //calculate the current GMT hour
 let time;
 const curGMT = (GMTdif = 3) => {
@@ -132,8 +133,6 @@ const humMeas = function(hum){
   if(hum=== 16) return `100%`
 }
 
-
-
   // show the weather condition's time(3 is timepoint, not magic number)
 const curTime = (arrIndex) => {
   //show 'now' if time is now
@@ -151,7 +150,8 @@ const curTime = (arrIndex) => {
 
 
 const tableMarker = function(data ){
-  fortables.innerHTML=''
+  
+fortables.innerHTML=''
   data.forEach((el, i) => {
     const tag = ` 
   <tr>
@@ -164,11 +164,24 @@ const tableMarker = function(data ){
     <td>${el.wind10m.direction}</td>
     <td>${el.temp2m}</td>
   </tr>
-
-  `    
+  ` 
+   
 fortables.insertAdjacentHTML("beforeend", tag);
 
   });
+
+  const fixedTitles = `
+  <tr class="titles"><th>SAAT</th>
+          <th>GÖRÜŞ-seeing</th>
+          <th>SAYDAMLIK-transparency</th>
+          <th>BULUT DURUMU-cloudcover</th>
+          <th>NEM-Humidity</th>
+          <th>RÜZGAR HIZI</th>
+          <th>RÜZGAR YÖNÜ</th>
+          <th>SICAKLIK</th>
+  </tr>     
+  `
+  fortables.insertAdjacentHTML("afterbegin",fixedTitles)
 
 }
 
@@ -234,7 +247,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
       getWeather(pickedlng,pickedlat).then((rslt)=>{
         const { dataseries: data, init: init } = rslt;
-        predictor(data, init, 3, 0.5);
+        predictor(data, init, 3, 0.2);
       })
 
         popup
