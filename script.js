@@ -132,28 +132,8 @@ const humMeas = function(hum){
   if(hum=== 16) return `100%`
 }
 
-//Leaf Map Library Function
-const LeafMap= function(cont){
-  var map = L.map('map').setView([51.505, -0.09], 13);
 
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-}).addTo(map);
 
-    var popup = L.popup();
-
-    function onMapClick(e) {
-      const {lat:pickedlat, lng: pickedlng} = e.latlng
-      console.log(pickedlat,pickedlng);
-        popup
-            .setLatLng(e.latlng)
-            .setContent(`${cont}` + e.latlng.toString())
-            .openOn(map);
-     
-    }    
-    map.on('click', onMapClick); 
-
-}
   // show the weather condition's time(3 is timepoint, not magic number)
 const curTime = (arrIndex) => {
   //show 'now' if time is now
@@ -171,7 +151,8 @@ const curTime = (arrIndex) => {
 
 
 const tableMarker = function(data ){
- data.forEach((el, i) => {
+  fortables.innerHTML=''
+  data.forEach((el, i) => {
     const tag = ` 
   <tr>
     <td>${curTime(i)}</td>
@@ -183,6 +164,7 @@ const tableMarker = function(data ){
     <td>${el.wind10m.direction}</td>
     <td>${el.temp2m}</td>
   </tr>
+
   `    
 fortables.insertAdjacentHTML("beforeend", tag);
 
@@ -193,7 +175,7 @@ fortables.insertAdjacentHTML("beforeend", tag);
 //select weather condition
 const predictor = function (fdata, init, tpoint = 3, day) {
  
-  LeafMap('değerler ');
+ 
   // fdata: dataseries array in JSON data, init: initializing time, tpoint: timepoint
   //which array's index indicates current time's weather condition
 
@@ -220,39 +202,59 @@ const getWeather = async function (lng,lt) {
   return result;
 };
 
+//Leaf Map Library Function
+const LeafMap= function(cont){
+  var map = L.map('map').setView([51.505, -0.09], 13);
 
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+
+    var popup = L.popup();
+
+    function onMapClick(e) {
+      const {lat:pickedlat, lng: pickedlng}  = e.latlng
+
+      getWeather(pickedlng,pickedlat).then((rslt)=>{
+        const { dataseries: data, init: init } = rslt;
+        predictor(data, init, 3, 0.5);
+      })
+
+        popup
+            .setLatLng(e.latlng)
+            .setContent(`${cont}` + e.latlng.toString())
+            .openOn(map);
+    }    
+    map.on('click', onMapClick); 
+    
+}
+
+
+LeafMap('astro')
 
 // obtain current device geolocation 
-if (navigator.geolocation)
-  navigator.geolocation.getCurrentPosition(
-    function (position) {
-      const { latitude } = position.coords;
-      const { longitude } = position.coords;
-      const lat = +latitude.toString().slice(0, 6);
-      const long = +longitude.toString().slice(0, 6)
+// if (navigator.geolocation)
+//   navigator.geolocation.getCurrentPosition(
+//     function (position) {
+//       const { latitude } = position.coords;
+//       const { longitude } = position.coords;
+//       const lat = +latitude.toString().slice(0, 6);
+//       const long = +longitude.toString().slice(0, 6)
            
-      getWeather(long,lat).then((rslt) => {
-        console.log(rslt, lat, long);
-        const { dataseries: data, init: init } = rslt;
-        //console.log(data, init);
-       predictor(data, init, 3, 0.5);
+//       getWeather(long,lat).then((rslt) => {
+//         console.log(rslt, lat, long);
+//         const { dataseries: data, init: init } = rslt;
+//         //console.log(data, init);
+//        predictor(data, init, 3, 0.5);
 
-        // console.log(data[0].prec_type);
-      });
-    },
-    function () {
-      alert("could not your position");
-    }
-  );
+//         // console.log(data[0].prec_type);
+//       });
+//     },
+//     function () {
+//       alert("could not your position");
+//     }
+//   );
 
-
-map.addEventListener('click',function(e){
-  if(e){
-
-  }
-
-})
-  
 
 
 
