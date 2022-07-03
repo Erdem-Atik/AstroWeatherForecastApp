@@ -252,7 +252,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
         popup
             .setLatLng(e.latlng)
-            .setContent(`${cont}` + e.latlng.toString())
+            .setContent(`${cont}`)
             .openOn(map);
     }    
     map.on('click', onMapClick); 
@@ -260,7 +260,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }
 
 
-LeafMap('astro')
+LeafMap('📍')
 
 
 
