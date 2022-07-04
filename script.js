@@ -248,7 +248,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
       getWeather(pickedlng,pickedlat).then((rslt)=>{
         const { dataseries: data, init: init } = rslt;
-        predictor(data, init, 3, 0.5);
+        predictor(data, init, 3, 1);
       })
 
         popup
