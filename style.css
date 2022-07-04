@@ -56,13 +56,19 @@ footer{
 table {
   font-family: arial, sans-serif;
   border-collapse: collapse;
-  width: 100%;
+  width:fit-content ;
+  height: auto;
+  width:100%
 }
 
 td, th {
   border: 1px solid #dddddd;
   text-align: left;
-  padding: 8px;
+  padding: 1px;
+  justify-content: center;
+}
+.title {
+  font-size: 2rem;
 }
 
 tr:nth-child(even) {

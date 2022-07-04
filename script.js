@@ -171,7 +171,8 @@ fortables.insertAdjacentHTML("beforeend", tag);
   });
 
   const fixedTitles = `
-  <tr class="titles"><th>SAAT</th>
+  <tr class="titles">
+          <th>SAAT</th>
           <th>GÖRÜŞ-seeing</th>
           <th>SAYDAMLIK-transparency</th>
           <th>BULUT DURUMU-cloudcover</th>
@@ -247,7 +248,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
       getWeather(pickedlng,pickedlat).then((rslt)=>{
         const { dataseries: data, init: init } = rslt;
-        predictor(data, init, 3, 0.2);
+        predictor(data, init, 3, 0.5);
       })
 
         popup
