@@ -217,7 +217,7 @@ const getWeather = async function (lng,lt) {
 };
 
 //Leaf Map Library Function
-const LeafMap= function(cont){
+const LeafLet= function(cont){
 
 
 //obtain current device geolocation 
@@ -229,6 +229,15 @@ if (navigator.geolocation)
        curlat = +latitude.toString().slice(0, 6);
        curlong = +longitude.toString().slice(0, 6) 
        var map = L.map('map').setView([ curlat, curlong], 14);
+       var popup = L.popup()
+       .setLatLng([curlat, curlong])
+       .setContent("Şimdi Burdayım")
+       .openOn(map);
+// device location's forecast
+       getWeather(curlong,curlat).then((rslt)=>{
+        const { dataseries: data, init: init } = rslt;
+        predictor(data, init, 3, 1);
+      })
 
 
        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -268,7 +277,7 @@ if (navigator.geolocation)
 }
 
 
-LeafMap('📍')
+LeafLet('📍')
 
 
 

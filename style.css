@@ -55,6 +55,7 @@ footer{
 }
 table {
   font-family: arial, sans-serif;
+  font-size: 1rem;
   border-collapse: collapse;
   width:fit-content ;
   height: auto;
