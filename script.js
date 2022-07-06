@@ -220,7 +220,6 @@ const getWeather = async function (lng,lt) {
 const LeafMap= function(cont){
 
 
-  let curlat, curlong
 //obtain current device geolocation 
 if (navigator.geolocation)
   navigator.geolocation.getCurrentPosition(
@@ -228,35 +227,43 @@ if (navigator.geolocation)
       const { latitude } = position.coords;
       const { longitude } = position.coords;
        curlat = +latitude.toString().slice(0, 6);
-       curlong = +longitude.toString().slice(0, 6)      
+       curlong = +longitude.toString().slice(0, 6) 
+       var map = L.map('map').setView([ curlat, curlong], 14);
+
+
+       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+           attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+       }).addTo(map);
+       
+           var popup = L.popup();
+
+
+
+
+           function onMapClick(e) {
+
+                   
+             const {lat:pickedlat, lng: pickedlng}  = e.latlng
+       
+             getWeather(pickedlng,pickedlat).then((rslt)=>{
+               const { dataseries: data, init: init } = rslt;
+               predictor(data, init, 3, 1);
+             })
+       
+               popup
+                   .setLatLng(e.latlng)
+                   .setContent(`${cont}`)
+                   .openOn(map);
+           }    
+           map.on('click', onMapClick); 
+       
     },
     function () {
       alert("could not your position");
     }
   );
 // workarouund solution
-  var map = L.map('map').setView([39.276827, 34.712049], 6);
 
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-}).addTo(map);
-
-    var popup = L.popup();
-
-    function onMapClick(e) {
-      const {lat:pickedlat, lng: pickedlng}  = e.latlng
-
-      getWeather(pickedlng,pickedlat).then((rslt)=>{
-        const { dataseries: data, init: init } = rslt;
-        predictor(data, init, 3, 1);
-      })
-
-        popup
-            .setLatLng(e.latlng)
-            .setContent(`${cont}`)
-            .openOn(map);
-    }    
-    map.on('click', onMapClick); 
     
 }
 
