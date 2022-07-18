@@ -136,7 +136,7 @@ const humMeas = function(hum){
   // show the weather condition's time(3 is timepoint, not magic number)
 const curTime = (arrIndex) => {
   //show 'now' if time is now
-  if (arrIndex === 0) return `ŞİMDİ`;
+  if (arrIndex === 0) return `NOW`;
   // show weather condition's time
   if (arrIndex > 0)
     return `${(
@@ -172,14 +172,14 @@ fortables.insertAdjacentHTML("beforeend", tag);
 
   const fixedTitles = `
   <tr class="titles">
-          <th>SAAT</th>
-          <th>GÖRÜŞ-seeing</th>
-          <th>SAYDAMLIK-transparency</th>
-          <th>BULUT DURUMU-cloudcover</th>
-          <th>NEM-Humidity</th>
-          <th>RÜZGAR HIZI</th>
-          <th>RÜZGAR YÖNÜ</th>
-          <th>SICAKLIK</th>
+          <th>TIME</th>
+          <th>SEEING</th>
+          <th>TRANSPARENCY</th>
+          <th>CLOUD COVER</th>
+          <th>HUMIDITY</th>
+          <th>WIND SPEED</th>
+          <th>WIND DIRECTION</th>
+          <th>TEMPERATURE</th>
   </tr>     
   `
   fortables.insertAdjacentHTML("afterbegin",fixedTitles)
@@ -231,7 +231,7 @@ if (navigator.geolocation)
        var map = L.map('map').setView([ curlat, curlong], 14);
        var popup = L.popup()
        .setLatLng([curlat, curlong])
-       .setContent("Şimdi Burdayım")
+       .setContent("Now, I'm here")
        .openOn(map);
 // device location's forecast
        getWeather(curlong,curlat).then((rslt)=>{
@@ -245,8 +245,6 @@ if (navigator.geolocation)
        }).addTo(map);
        
            var popup = L.popup();
-
-
 
 
            function onMapClick(e) {
@@ -272,12 +270,11 @@ if (navigator.geolocation)
     }
   );
 // workarouund solution
-
-    
+   
 }
 
 
-LeafLet('📍')
+LeafLet('Selected Location📍')
 
 
 

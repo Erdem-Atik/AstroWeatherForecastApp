@@ -21,13 +21,12 @@ body{
 }
 header{
   grid-area: header;
-  background-color: #010a13;
+  background-color: #151B54;
   color: #ffffff;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0.5rem;
-  width: auto;
 }
 header a{
   color: #ffffff;
@@ -37,6 +36,7 @@ header a{
 header a:hover{
   color: #f0899f;
 }
+
 .brand a {
   font-size: 3rem;
 }
@@ -46,7 +46,7 @@ header a:hover{
 }
 
 footer{
-  background-color: #010a13;
+  background-color: #151B54;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -55,11 +55,14 @@ footer{
 }
 table {
   font-family: arial, sans-serif;
+  background-color:rgba(0, 0, 0, 0);
   font-size: 1rem;
   border-collapse: collapse;
   width:fit-content ;
   height: auto;
-  width:100%
+  width:80%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 td, th {
@@ -67,6 +70,8 @@ td, th {
   text-align: left;
   padding: 1px;
   justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
 }
 .title {
   font-size: 2rem;
